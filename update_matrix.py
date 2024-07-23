@@ -1,5 +1,4 @@
 import os
-import re
 import json
 import sys
 import gspread
@@ -15,8 +14,6 @@ def main():
             raise ValueError("Credentials JSON not found in environment variable.")
         if not sheet_id:
             raise ValueError("Sheet ID not found in environment variable.")
-        if not re.match(r'^[a-zA-Z0-9-_]+$', sheet_id):
-            raise ValueError("Invalid Google Sheet ID.")
 
         credentials_data = json.loads(credentials_json)
         print("Credentials loaded successfully.")
