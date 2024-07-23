@@ -17,7 +17,8 @@ def main():
 
         # Define the scope and credentials
         scopes = [
-            'https://www.googleapis.com/auth/spreadsheets'
+          'https://www.googleapis.com/auth/spreadsheets',
+          'https://www.googleapis.com/auth/drive.file'
         ]
         credentials = Credentials.from_service_account_info(credentials_data, scopes=scopes)
         print("Credentials initialized successfully.")
