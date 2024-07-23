@@ -28,7 +28,7 @@ def main():
         print("Google Sheets client authorized successfully.")
 
         # Open the Google Sheet by name
-        sheet = client.open("Product Matrices").worksheet("Deployment Matrix")
+        sheet = client.open("ProductMatrices").worksheet("DeploymentMatrix")
         print("Google Sheet opened successfully.")
 
         # Update the sheets
