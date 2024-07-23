@@ -26,7 +26,8 @@ jobs:
       
       - name: Update Google Sheets
         env:
-          GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }} 
+          GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
+          GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
         run: |
           echo "${GOOGLE_SHEETS_CREDENTIALS}" > credentials.json
           python update_matrix.py

@@ -1,8 +1,8 @@
 import os
+import re
 import json
 import sys
 import gspread
-import re
 from google.oauth2.service_account import Credentials
 from google.auth.exceptions import GoogleAuthError
 
