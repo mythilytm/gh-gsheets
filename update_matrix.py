@@ -2,6 +2,7 @@ import os
 import json
 import sys
 import gspread
+import re
 from google.oauth2.service_account import Credentials
 from google.auth.exceptions import GoogleAuthError
 
@@ -10,8 +11,12 @@ def main():
         # Load credentials from the environment variable
         credentials_json = os.getenv('GOOGLE_SHEETS_CREDENTIALS')
         sheet_id = os.getenv('GOOGLE_SHEET_ID')
-        if not credentials_json or not sheet_id:
-            raise ValueError("No credentials found in environment variable.")
+        if not credentials_json:
+            raise ValueError("Credentials JSON not found in environment variable.")
+        if not sheet_id:
+            raise ValueError("Sheet ID not found in environment variable.")
+        if not re.match(r'^[a-zA-Z0-9-_]+$', sheet_id):
+            raise ValueError("Invalid Google Sheet ID.")
 
         credentials_data = json.loads(credentials_json)
         print("Credentials loaded successfully.")
