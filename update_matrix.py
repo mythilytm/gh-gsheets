@@ -27,8 +27,8 @@ def main():
         client = gspread.authorize(credentials)
         print("Google Sheets client authorized successfully.")
 
-        # Open the Google Sheet by name
-        sheet = client.open("ProductMatrices").worksheet("DeploymentMatrix")
+        # Open the Google Sheet by name'
+        sheet = client.open_by_key("1UccoRr51TiQR6tUsq3SrNsP9FVm0tMfhdWX7VvHXkbQ").worksheet("DeploymentMatrix")
         print("Google Sheet opened successfully.")
 
         # Update the sheets
