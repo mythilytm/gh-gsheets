@@ -32,7 +32,7 @@ def main():
         print("Google Sheet opened successfully.")
 
         # Update the sheets
-        update_response = sheet.update('B2', 'Hello, sheet!')
+        update_response = sheet.update('B2', [['Hello, sheet!']])
         print("Sheet update response:", update_response)
 
         # Verify update response
