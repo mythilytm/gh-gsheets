@@ -34,10 +34,13 @@ def main():
         print("Google Sheets client authorized successfully.")
 
         # Open the Google Sheet by name'
-        sheet = client.open_by_key(sheet_id).worksheet("DeploymentMatrix")
+        sheet = client.open_by_key(sheet_id).worksheet("Running Deploys")
         print("Google Sheet opened successfully.")
 
-        current_date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        date_now = datetime.now()
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        current_time = datetime.now().strftime("%H:%M:%S")
+
         deployer_name = getpass.getuser()
         try:
           commit_sha = subprocess.check_output(["git", "rev-parse", "HEAD"]).decode().strip()
@@ -56,7 +59,7 @@ def main():
         except subprocess.CalledProcessError:
           current_tag = "N/A"
 
-        new_row_data = [current_date_time, "flex-plugins", "AS_development", "", deployer_name, current_branch, commit_sha, current_tag]  
+        new_row_data = [date_now, current_date, current_time, "flex-plugins", "AS_development", "", deployer_name, current_branch, commit_sha, current_tag]  
         update_response = sheet.append_row(new_row_data)
         print("Sheet update response")
 
