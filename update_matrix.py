@@ -4,6 +4,9 @@ import sys
 import gspread
 from google.oauth2.service_account import Credentials
 from google.auth.exceptions import GoogleAuthError
+from datetime import datetime
+import getpass
+import subprocess
 
 def main():
     try:
@@ -34,7 +37,26 @@ def main():
         sheet = client.open_by_key(sheet_id).worksheet("DeploymentMatrix")
         print("Google Sheet opened successfully.")
 
-        new_row_data = ["Data1", "Data2", "Data3"]  
+        current_date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        deployer_name = getpass.getuser()
+        try:
+          commit_sha = subprocess.check_output(["git", "rev-parse", "HEAD"]).decode().strip()
+        except subprocess.CalledProcessError:
+          commit_sha = "N/A"
+        
+        try:
+          # Get the current Git branch name
+          current_branch = subprocess.check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"]).decode().strip()
+        except subprocess.CalledProcessError:
+          current_branch = "N/A"
+
+        try:
+          # Get the tag that exactly matches the current commit
+          current_tag = subprocess.check_output(["git", "describe", "--tags", "--exact-match"]).decode().strip()
+        except subprocess.CalledProcessError:
+          current_tag = "N/A"
+
+        new_row_data = [current_date_time, "flex-plugins", "AS_development", "", deployer_name, current_branch, commit_sha, current_tag]  
         update_response = sheet.append_row(new_row_data)
         print("Sheet update response")
 
