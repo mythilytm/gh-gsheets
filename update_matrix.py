@@ -37,7 +37,6 @@ def main():
         sheet = client.open_by_key(sheet_id).worksheet("Running Deploys")
         print("Google Sheet opened successfully.")
 
-        date_now = datetime.now()
         current_date = datetime.now().strftime("%Y-%m-%d")
         current_time = datetime.now().strftime("%H:%M:%S")
 
