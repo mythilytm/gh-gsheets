@@ -9,7 +9,8 @@ def main():
     try:
         # Load credentials from the environment variable
         credentials_json = os.getenv('GOOGLE_SHEETS_CREDENTIALS')
-        if not credentials_json:
+        sheet_id = os.getenv('GOOGLE_SHEET_ID')
+        if not credentials_json or not sheet_id:
             raise ValueError("No credentials found in environment variable.")
 
         credentials_data = json.loads(credentials_json)
@@ -28,7 +29,7 @@ def main():
         print("Google Sheets client authorized successfully.")
 
         # Open the Google Sheet by name'
-        sheet = client.open_by_key("1UccoRr51TiQR6tUsq3SrNsP9FVm0tMfhdWX7VvHXkbQ").worksheet("DeploymentMatrix")
+        sheet = client.open_by_key(sheet_id).worksheet("DeploymentMatrix")
         print("Google Sheet opened successfully.")
 
         new_row_data = ["Data1", "Data2", "Data3"]  
