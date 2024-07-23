@@ -1,23 +1,44 @@
 import os
 import json
+import sys
 import gspread
 from google.oauth2.service_account import Credentials
+from google.auth.exceptions import GoogleAuthError
 
-# Load credentials from the environment variable
-credentials_json = os.getenv('GOOGLE_SHEETS_CREDENTIALS')
-credentials_data = json.loads(credentials_json)
+def main():
+    try:
+        # Load credentials from the environment variable
+        credentials_json = os.getenv('GOOGLE_SHEETS_CREDENTIALS')
+        if not credentials_json:
+            raise ValueError("No credentials found in environment variable.")
 
-# Define the scope and credentials
+        credentials_data = json.loads(credentials_json)
 
-credentials = Credentials.from_service_account_info(credentials_data, 'https://www.googleapis.com/auth/spreadsheets')
+        # Define the scope and credentials
+        scopes = [
+            'https://www.googleapis.com/auth/spreadsheets',
+            'https://www.googleapis.com/auth/drive'
+        ]
+        credentials = Credentials.from_service_account_info(credentials_data, scopes=scopes)
 
-# Initialize the client
-client = gspread.authorize(credentials)
+        # Initialize the client
+        client = gspread.authorize(credentials)
 
-# Open the Google Sheet
-sheet = client.open("Product Matrices").worksheet("Deployment Matrix")
+        # Open the Google Sheet by name
+        sheet = client.open("Product Matrices").worksheet("Deployment Matrix")
 
-# Update the sheet
-sheet.update('B2', 'Hello, sheet!')
+        # Update the sheets
+        update_response = sheet.update('B2', 'Hello, sheet!')
 
-print('Sheet updated successfully!')
+        # Verify update response
+        if not update_response:
+            raise RuntimeError("Failed to update the Google Sheet.")
+
+        print("Google Sheet updated successfully.")
+
+    except (GoogleAuthError, ValueError, RuntimeError, json.JSONDecodeError) as e:
+        print(f"Error: {e}")
+        sys.exit(1)
+
+if __name__ == '__main__':
+    main()
