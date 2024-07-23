@@ -58,7 +58,7 @@ def main():
         except subprocess.CalledProcessError:
           current_tag = "N/A"
 
-        new_row_data = [current_date, current_time, "flex-plugins", "AS_development", "", deployer_name, current_branch, commit_sha, current_tag]  
+        new_row_data = [current_date, current_time, "flex-plugins", "AS_development", "", deployer_name, current_branch, current_tag, commit_sha]  
         update_response = sheet.append_row(new_row_data)
         print("Sheet update response")
 
