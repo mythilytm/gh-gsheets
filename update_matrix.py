@@ -32,8 +32,10 @@ def main():
         print("Google Sheet opened successfully.")
 
         # Update the sheets
-        update_response = sheet.update('B2', [['Hello, sheet!']])
-        print("Sheet update response:", update_response)
+        # Assuming 'sheet' is your worksheet object
+        new_row_data = ["Data1", "Data2", "Data3"]  # Add your data for the new row here
+        update_response = sheet.append_row(new_row_data)  # Capture the response
+        print("Sheet update response")
 
         # Verify update response
         if not update_response:
