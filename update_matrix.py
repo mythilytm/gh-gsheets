@@ -31,10 +31,8 @@ def main():
         sheet = client.open_by_key("1UccoRr51TiQR6tUsq3SrNsP9FVm0tMfhdWX7VvHXkbQ").worksheet("DeploymentMatrix")
         print("Google Sheet opened successfully.")
 
-        # Update the sheets
-        # Assuming 'sheet' is your worksheet object
-        new_row_data = ["Data1", "Data2", "Data3"]  # Add your data for the new row here
-        update_response = sheet.append_row(new_row_data)  # Capture the response
+        new_row_data = ["Data1", "Data2", "Data3"]  
+        update_response = sheet.append_row(new_row_data)
         print("Sheet update response")
 
         # Verify update response
