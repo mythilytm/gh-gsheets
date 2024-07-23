@@ -13,6 +13,7 @@ def main():
             raise ValueError("No credentials found in environment variable.")
 
         credentials_data = json.loads(credentials_json)
+        print("Credentials loaded successfully.")
 
         # Define the scope and credentials
         scopes = [
@@ -20,15 +21,19 @@ def main():
             'https://www.googleapis.com/auth/drive'
         ]
         credentials = Credentials.from_service_account_info(credentials_data, scopes=scopes)
+        print("Credentials initialized successfully.")
 
         # Initialize the client
         client = gspread.authorize(credentials)
+        print("Google Sheets client authorized successfully.")
 
         # Open the Google Sheet by name
         sheet = client.open("Product Matrices").worksheet("Deployment Matrix")
+        print("Google Sheet opened successfully.")
 
         # Update the sheets
         update_response = sheet.update('B2', 'Hello, sheet!')
+        print("Sheet update response:", update_response)
 
         # Verify update response
         if not update_response:
